@@ -1,0 +1,4 @@
+#highscore html
+
+<tr class="[a-z]*">\s*<td>([\d]+)<.td>\s*<td><a href="http:\/\/(.*)\.gigrawars\.de\/playerInfo\/([\d]*)\/">(.*)<\/a> <a href="http:\/\/.*\.gigrawars\.de\/alliance\/([\d]*)\/">\[(.*)\]<\/a><\/td>\s*<td>([0-9\.]+)<\/td>\s*<td>([0-9\.]+)<\/td>\s*<td>([0-9\.]+)<\/td>\s*<td>([0-9\.]+)<\/td>
+
