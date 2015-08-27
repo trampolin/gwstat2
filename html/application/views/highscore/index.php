@@ -1,15 +1,6 @@
 <div class="wrapper wrapper-content">
 
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            Highscore
-        </div>
-
-        <div class="panel-body">
-            body
-        </div>
-    </div>
 
 
     <div class="panel panel-primary">
@@ -18,50 +9,25 @@
         </div>
 
         <div class="panel-body">
-            <?php var_dump($highscore) ?>
+
+            <table class="table table-bordered">
+                <thead>
+
+                </thead>
+
+                <tbody>
+                    <?php foreach($highscore as $item) : ?>
+                    <tr>
+                        <?php foreach($item as $td) : ?>
+                            <td><?= $td ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
-
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            Highscore
-        </div>
-
-        <div class="panel-body">
-            body
-        </div>
-    </div>
-
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            Highscore
-        </div>
-
-        <div class="panel-body">
-            body
-        </div>
-    </div>
-
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-            Highscore
-        </div>
-
-        <div class="panel-body">
-            body
-        </div>
-    </div>
-
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            Highscore
-        </div>
-
-        <div class="panel-body">
-            body
-        </div>
-    </div>
 
 
 </div>

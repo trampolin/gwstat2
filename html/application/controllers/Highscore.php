@@ -31,4 +31,36 @@ class Highscore extends CI_Controller
 
         $this->load->view('main/footer');
     }
+
+    public function parse() {
+
+        $this->load->view('main/header', [
+            'menu' => $this->menu->getMenuItems()
+        ]);
+
+        $this->load->view('highscore/parse');
+
+        $this->load->view('main/footer');
+
+    }
+
+    public function parseHtml() {
+
+        $this->load->view('main/header', [
+            'menu' => $this->menu->getMenuItems()
+        ]);
+
+        $parsedHighscore = $this->hs->parseHtml($this->input->post('html'));
+
+        $highscoreProcessResult = $this->hs->captureRows($parsedHighscore);
+
+        $this->load->view('highscore/parse', [
+            'html' => $this->input->post('html'),
+            'parsedHighscore' => $parsedHighscore,
+            'highscoreProcessResult' => $highscoreProcessResult
+        ]);
+
+        $this->load->view('main/footer');
+
+    }
 }
