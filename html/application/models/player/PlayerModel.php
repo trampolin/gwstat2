@@ -76,4 +76,15 @@ class PlayerModel extends CI_Model
         return $playerId;
 
     }
+
+    public function playerModal() {
+        $mh = new ModalWindow('playerModal');
+        $mh->dataAttribute = 'data-player-id';
+        $mh->loadFunctionName = 'loadPlayer';
+        $mh->ajaxRoute = base_url().'player/modal/';
+        $mh->title = 'Spieler';
+        $mh->icon = 'fa-user';
+        $this->load->view('modal/container', $mh->getData());
+    }
+
 }

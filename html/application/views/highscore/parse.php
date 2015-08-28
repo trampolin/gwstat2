@@ -31,7 +31,7 @@
 
         <div class="panel-body">
             <span><?= count($parsedHighscore) ?> Einträge geparst</span>
-            <br></br>
+            <br><br>
             <span><?php var_dump($highscoreProcessResult)  ?></span>
 
             <?php //var_dump($parsedHighscore) ?>

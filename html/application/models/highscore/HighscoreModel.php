@@ -8,6 +8,11 @@
  */
 class HighscoreModel extends CI_Model
 {
+    /**
+     * @var string
+     */
+    private $_highscoreCacheKey = 'current_highscore';
+
     public function __construct()
     {
         parent::__construct();
@@ -15,14 +20,22 @@ class HighscoreModel extends CI_Model
         $this->load->model('player/PlayerModel', 'player');
         $this->load->model('uni/UniModel', 'uni');
         $this->load->model('alliance/AllianceModel', 'alli');
+
+
+        $this->load->driver('cache', [
+                'adapter' => 'memcached',
+                'backup' => 'file'
+            ]
+        );
     }
 
-
-    //                 p.current_alliance_id as alliance_id,
-    //                 p.current_name_id as name_id,
-
+    /**
+     * @param array $filter
+     * @return array mixed
+     */
     public function getHighscore($filter = []) {
-        $highscore = $this->db->select('h.*,
+
+        $query = $this->db->select('h.*,
                 pn.player_name,
                 a.id as alliance_id,
                 a.alliance_name,
@@ -31,18 +44,62 @@ class HighscoreModel extends CI_Model
             //->join('gwstat2.player p', 'h.player_id = p.id','left outer')
             ->join('gwstat2.view_playername pn', 'h.player_id = pn.player_id and h.uni_id = pn.uni_id','left outer')
             ->join('gwstat2.view_player_alliance pa', 'h.player_id = pa.player_id and h.uni_id = pa.uni_id','left outer')
+            ->join('gwstat2.alliance a', 'pa.alliance_id = a.id and pa.uni_id = a.uni_id','left outer');
+
+        if (count($filter) === 0) {
+            if(!$highscore = $this->cache->get($this->_highscoreCacheKey)) {
+
+                $highscore = $query
+                    ->get()
+                    ->result();
+
+                $this->cache->save($this->_highscoreCacheKey, $highscore, 3600*24);
+            }
+        } else {
+            $highscore = $query;
+
+            if (isset($filter['player_id'])) {
+                $highscore = $highscore->where('h.player_id', $filter['player_id']);
+            }
+            if (isset($filter['alliance_id'])) {
+                $highscore = $highscore->where('a.id', $filter['alliance_id']);
+            }
+
+            $highscore = $highscore->get()->result();
+        }
+
+        return $highscore;
+    }
+
+    public function getHighscoreProgress($playerId) {
+
+        $highscore = $this->db->select('h.*,
+                pn.player_name,
+                a.id as alliance_id,
+                a.alliance_name,
+                a.alliance_tag')
+            ->from('gwstat2.highscore h')
+            //->join('gwstat2.player p', 'h.player_id = p.id','left outer')
+            ->join('gwstat2.view_playername pn', 'h.player_id = pn.player_id and h.uni_id = pn.uni_id','left outer')
+            ->join('gwstat2.view_player_alliance pa', 'h.player_id = pa.player_id and h.uni_id = pa.uni_id','left outer')
             ->join('gwstat2.alliance a', 'pa.alliance_id = a.id and pa.uni_id = a.uni_id','left outer')
+            ->where('h.player_id', $playerId)
+            ->order_by('h.capture_first desc')
             ->get()
             ->result();
 
         return $highscore;
     }
 
+    /**
+     * @param string $html
+     * @return array
+     */
     public function parseHtml($html) {
 
         $highscoreRaw = [];
 
-        $regex = '/<tr class="[a-z]*">\s*<td>([\d]+)<.td>\s*<td><a href="http:\/\/(.*)\.gigrawars\.de\/playerInfo\/([\d]*)\/">(.*)<\/a> <a href="http:\/\/.*\.gigrawars\.de\/alliance\/([\d]*)\/">(\[(.*)\]|)<\/a><\/td>\s*<td>([0-9\.]+)<\/td>\s*<td>([0-9\.]+)<\/td>\s*<td>([0-9\.]+)<\/td>\s*<td>([0-9\.]+)<\/td>/';
+        $regex = '/<tr class="[a-z]*">\s*<td>([\d\.]+)<.td>\s*<td><a href="http:\/\/(.*)\.gigrawars\.de\/playerInfo\/([\d]*)\/">(.*)<\/a> <a href="http:\/\/.*\.gigrawars\.de\/alliance\/([\d]*)\/">(\[(.*)\]|)<\/a><\/td>\s*<td>([0-9\.]+)<\/td>\s*<td>([0-9\.]+)<\/td>\s*<td>([\d\.]+)<\/td>\s*<td>([0-9\.]+)<\/td>/';
 
         preg_match_all($regex,$html,$highscoreRaw);
 
@@ -50,7 +107,7 @@ class HighscoreModel extends CI_Model
 
         foreach($highscoreRaw[0] as $key => $value) {
             $highscore[$highscoreRaw[1][$key]] = [
-                'place' => $highscoreRaw[1][$key],
+                'place' => str_replace('.','',$highscoreRaw[1][$key]),
                 'uni' => $highscoreRaw[2][$key],
                 'player_id' => $highscoreRaw[3][$key],
                 'player_name' => $highscoreRaw[4][$key],
@@ -66,6 +123,10 @@ class HighscoreModel extends CI_Model
         return $highscore;
     }
 
+    /**
+     * @param array $rows
+     * @return array
+     */
     public function captureRows($rows) {
 
         $result = [

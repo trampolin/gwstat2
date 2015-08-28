@@ -15,6 +15,8 @@ class Highscore extends CI_Controller
 
         $this->load->model('main/Menu', 'menu');
         $this->load->model('highscore/HighscoreModel', 'hs');
+        $this->load->model('player/PlayerModel', 'player');
+        $this->load->model('alliance/AllianceModel', 'alli');
     }
 
     public function index() {
@@ -28,6 +30,9 @@ class Highscore extends CI_Controller
         $this->load->view('highscore/index', [
             'highscore' => $highscore
         ]);
+
+        $this->player->playerModal();
+        $this->alli->allianceModal();
 
         $this->load->view('main/footer');
     }

@@ -4,11 +4,7 @@
 
 </div>
 
-<!-- Mainly scripts -->
-<script src="<?= base_url() ?>public/js/jquery-2.1.1.js"></script>
-<script src="<?= base_url() ?>public/js/bootstrap.min.js"></script>
-<script src="<?= base_url() ?>public/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="<?= base_url() ?>public/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
 
 <!-- Flot -->
 <script src="<?= base_url() ?>public/js/plugins/flot/jquery.flot.js"></script>
@@ -43,9 +39,16 @@
 <!-- Toastr -->
 <script src="<?= base_url() ?>public/js/plugins/toastr/toastr.min.js"></script>
 
+<!-- Data Tables -->
+<script src="<?=base_url()?>public/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="<?=base_url()?>public/js/plugins/dataTables/dataTables.highlight.js"></script>
+<script src="<?=base_url()?>public/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="<?=base_url()?>public/js/plugins/dataTables/dataTables.responsive.js"></script>
+<script src="<?=base_url()?>public/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 
-<script>
-
+<script type="text/javascript">
+    gwstat.init('<?= base_url() ?>');
 </script>
+
 </body>
 </html>

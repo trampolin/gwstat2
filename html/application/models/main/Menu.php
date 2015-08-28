@@ -9,46 +9,34 @@
 class Menu extends CI_Model
 {
 
+    /**
+     * @return array
+     */
     public function getMenuItems()
     {
         $menu = [
             [
-                'label' => 'A',
+                'label' => 'Home',
                 'href' => '',
                 'icon' => 'fa-th-large',
                 'items' => []
             ],
             [
-                'label' => 'B',
+                'label' => 'Highscore',
                 'href' => null,
                 'icon' => 'fa-bar-chart-o',
                 'items' => [
                     [
-                        'label' => 'C',
-                        'href' => '',
-                        'icon' => 'fa-gear',
+                        'label' => 'Highscore',
+                        'href' => base_url().'highscore',
+                        'icon' => 'fa-bar-chart-o',
                         'items' => []
                     ],
                     [
-                        'label' => 'D',
-                        'href' => null,
-                        'icon' => 'fa-battery-3',
-                        'items' => [
-                            [
-                                'label' => 'E',
-                                'href' => '',
-                                'icon' => 'fa-th-large',
-                                'items' => []
-                            ],
-                            [
-                                'label' => 'F',
-                                'href' => null,
-                                'icon' => 'fa-th-large',
-                                'items' => [
-
-                                ]
-                            ]
-                        ]
+                        'label' => 'Eintragen',
+                        'href' => base_url().'highscore/parse',
+                        'icon' => 'fa-edit',
+                        'items' => []
                     ]
                 ]
             ]

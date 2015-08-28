@@ -82,4 +82,14 @@ class AllianceModel extends CI_Model
             return $this->db->insert_id();
         }
     }
+
+    public function allianceModal() {
+        $mh = new ModalWindow('allianceModal');
+        $mh->dataAttribute = 'data-alliance-id';
+        $mh->loadFunctionName = 'loadAlliance';
+        $mh->ajaxRoute = base_url().'alliance/modal/';
+        $mh->title = 'Allianz';
+        $mh->icon = 'fa-users';
+        $this->load->view('modal/container', $mh->getData());
+    }
 }

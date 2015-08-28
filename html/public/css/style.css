@@ -1017,7 +1017,7 @@ button.dim:active:before {
 .label-warning,
 .badge-warning {
   background-color: #f2ae72;
-  color: #FFFFFF;
+  color: #000000;
 }
 .label-warning-light,
 .badge-warning-light {
@@ -1032,7 +1032,7 @@ button.dim:active:before {
 .label-info,
 .badge-info {
   background-color: #f2e394;
-  color: #FFFFFF;
+  color: #000000;
 }
 .label-inverse,
 .badge-inverse {
@@ -1048,6 +1048,11 @@ button.dim:active:before {
 .badge-disable {
   background-color: #2A2E36;
   color: #8B91A0;
+}
+.label-alliance,
+.badge-alliance {
+  background-color: #f2e394;
+  color: #000000;
 }
 /* TOOGLE SWICH */
 .onoffswitch {
@@ -3475,7 +3480,7 @@ table.table-mail tr td {
 .panel-info > .panel-heading {
   background-color: #f2e394;
   border-color: #f2e394;
-  color: #ffffff;
+  color: #000000;
 }
 .panel-warning {
   border-color: #f2ae72;
@@ -3483,7 +3488,7 @@ table.table-mail tr td {
 .panel-warning > .panel-heading {
   background-color: #f2ae72;
   border-color: #f2ae72;
-  color: #ffffff;
+  color: #000000;
 }
 .panel-danger {
   border-color: #d96459;
@@ -6432,4 +6437,7 @@ body.skin-3 {
   width: 100%;
   max-width: 100%;
   min-height: 300px;
+}
+span.highlight {
+  background: #f2e394;
 }
