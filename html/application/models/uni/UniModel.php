@@ -18,4 +18,11 @@ class UniModel extends CI_Model
             return $this->db->insert_id();
         }
     }
+
+    public function getUnis() {
+        return $this->db->select()
+            ->from('gwstat2.uni')
+            ->get()
+            ->result();
+    }
 }

@@ -12,17 +12,17 @@
 
             <?php foreach ($menu as $item) { ?>
                 <li>
-                    <a href="<?= $item['href'] ?>"><?php if($item['icon'] != '' && $item['icon'] != null) { ?><i class="fa <?= $item['icon'] ?>"></i><?php } ?> <span class="nav-label"><?= $item['label'] ?></span><?php if(count($item['items']) > 0) { ?> <span class="fa arrow"></span><?php } ?></a>
+                    <a href="<?= $item['href'] ?>"><?php if($item['icon'] != '' && $item['icon'] != null) { ?><i class="fa fa-fw <?= $item['icon'] ?>"></i><?php } ?> <span class="nav-label"><?= $item['label'] ?></span><?php if(count($item['items']) > 0) { ?> <span class="fa arrow"></span><?php } ?></a>
                     <?php if(count($item['items']) > 0) { ?>
                         <ul class="nav nav-second-level">
                         <?php foreach ($item['items'] as $subItem) { ?>
                         <li>
-                            <a href="<?= $subItem['href'] ?>"><?php if($subItem['icon'] != '' && $subItem['icon'] != null) { ?><i class="fa <?= $subItem['icon'] ?>"></i><?php } ?> <span class="nav-label"><?= $subItem['label'] ?></span><?php if(count($subItem['items']) > 0) { ?> <span class="fa arrow"></span><?php } ?></a>
+                            <a href="<?= $subItem['href'] ?>"><?php if($subItem['icon'] != '' && $subItem['icon'] != null) { ?><i class="fa fa-fw <?= $subItem['icon'] ?>"></i><?php } ?> <span class="nav-label"><?= $subItem['label'] ?></span><?php if(count($subItem['items']) > 0) { ?> <span class="fa arrow"></span><?php } ?></a>
                             <?php if(count($subItem['items']) > 0) { ?>
                             <ul class="nav nav-third-level">
                                 <?php foreach ($subItem['items'] as $subSubItem) { ?>
                                 <li>
-                                    <a href="<?= $subSubItem['href'] ?>"><?php if($subSubItem['icon'] != '' && $subSubItem['icon'] != null) { ?><i class="fa <?= $subSubItem['icon'] ?>"></i><?php } ?> <?= $subSubItem['label'] ?></a>
+                                    <a href="<?= $subSubItem['href'] ?>"><?php if($subSubItem['icon'] != '' && $subSubItem['icon'] != null) { ?><i class="fa fa-fw <?= $subSubItem['icon'] ?>"></i><?php } ?> <?= $subSubItem['label'] ?></a>
                                 </li>
                                 <?php } ?>
                             </ul>

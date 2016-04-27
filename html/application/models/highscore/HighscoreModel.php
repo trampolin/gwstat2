@@ -91,6 +91,39 @@ class HighscoreModel extends CI_Model
         return $highscore;
     }
 
+    public function getInactivePlayers($dateFrom = null,$dateTo = null) {
+        $highscore = $this->db->select('h.player_id,
+                p.player_name,
+                min(points_sum),
+                max(points_sum) as points_sum,
+                max(points_planets) as points_planets,
+                max(points_research) as points_research,
+                a.id as alliance_id,
+                a.alliance_name,
+                a.alliance_tag')
+            ->from('gwstat2.highscore h')
+            ->join('gwstat2.view_playername p', 'p.player_id = h.player_id')
+            ->join('gwstat2.view_player_alliance pa', 'h.player_id = pa.player_id and h.uni_id = pa.uni_id','left outer')
+            ->join('gwstat2.alliance a', 'pa.alliance_id = a.id and pa.uni_id = a.uni_id','left outer')
+            ->group_by('h.player_id')
+            ->having('min(points_sum)=max(points_sum)')
+            ->order_by('3 desc');
+
+        if ($dateTo !== null) {
+            $highscore = $highscore->where('capture_first <=', $dateTo);
+        }
+
+        if ($dateFrom !== null) {
+            $highscore = $highscore->where('capture_last >=', $dateFrom);
+        }
+
+        $highscore = $highscore
+            ->get()
+            ->result();
+
+        return $highscore;
+    }
+
     /**
      * @param string $html
      * @return array
@@ -215,6 +248,8 @@ class HighscoreModel extends CI_Model
             }
 
         }
+
+        $this->cache->delete($this->_highscoreCacheKey);
 
         return $result;
     }

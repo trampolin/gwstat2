@@ -37,6 +37,23 @@ class Highscore extends CI_Controller
         $this->load->view('main/footer');
     }
 
+    public function inactive() {
+        $this->load->view('main/header', [
+            'menu' => $this->menu->getMenuItems()
+        ]);
+
+        $highscore = $this->hs->getInactivePlayers();
+
+        $this->load->view('highscore/inactive', [
+            'highscore' => $highscore
+        ]);
+
+        $this->player->playerModal();
+        $this->alli->allianceModal();
+
+        $this->load->view('main/footer');
+    }
+
     public function parse() {
 
         $this->load->view('main/header', [

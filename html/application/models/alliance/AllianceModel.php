@@ -42,7 +42,7 @@ class AllianceModel extends CI_Model
         $playerAllianceData = $this->db->select()
             ->from('gwstat2.view_player_alliance')
             ->where('uni_id', $uniId)
-            ->where('player_id', $allianceId)
+            ->where('player_id', $playerId)
             ->get()
             ->result();
 
@@ -61,7 +61,6 @@ class AllianceModel extends CI_Model
                 ]);
 
                 return $this->db->insert_id();
-
 
             } else {
                 // update time

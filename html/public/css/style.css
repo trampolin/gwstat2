@@ -6433,6 +6433,12 @@ body.skin-3 {
 .panel-info > .panel-heading {
   color: #676a6c;
 }
+.planet-p {
+  padding: 5px;
+}
+.planet-p:hover {
+  background: #eeeeee;
+}
 .parse-text-html {
   width: 100%;
   max-width: 100%;
